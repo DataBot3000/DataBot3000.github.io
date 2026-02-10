@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wicked Grill Food Truck</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Crimson+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #fafaf8;
+            --text: #1a1a1a;
+            --accent: #ff4400;
+            --border: #e0e0dc;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Pro', serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 32px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 80px;
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        h1 {
+            font-family: 'DM Mono', monospace;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 8px;
+        }
+
+        .back-link {
+            display: inline-block;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text);
+            text-decoration: none;
+            margin-top: 16px;
+            padding: 8px 0;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            border-bottom-color: var(--accent);
+        }
+
+        .section {
+            margin-bottom: 80px;
+            opacity: 0;
+            animation: slideUp 0.8s ease-out forwards;
+            animation-delay: 0.2s;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 32px;
+            color: #999;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .schedule-card {
+            background: var(--card-bg);
+            padding: 32px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .schedule-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .schedule-card h3 {
+            font-family: 'DM Mono', monospace;
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+            color: var(--accent);
+        }
+
+        .schedule-card p {
+            font-size: 1.05rem;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 32px;
+        }
+
+        .menu-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 24px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .menu-item:hover::before {
+            transform: scaleX(1);
+        }
+
+        .menu-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 12px;
+        }
+
+        .menu-name {
+            font-family: 'DM Mono', monospace;
+            font-size: 1.15rem;
+            font-weight: 500;
+        }
+
+        .menu-price {
+            font-family: 'DM Mono', monospace;
+            font-size: 1.3rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .menu-desc {
+            color: #555;
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .menu-tag {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-family: 'DM Mono', monospace;
+            color: var(--accent);
+            background: rgba(255, 68, 0, 0.1);
+            padding: 4px 12px;
+            border-radius: 2px;
+            margin-top: 8px;
+        }
+
+        .location-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 48px;
+            text-align: center;
+        }
+
+        .location-section h2 {
+            font-family: 'DM Mono', monospace;
+            font-size: 1.8rem;
+            margin-bottom: 24px;
+            font-weight: 400;
+        }
+
+        .location-section p {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .address-link {
+            display: inline-block;
+            font-family: 'DM Mono', monospace;
+            color: var(--accent);
+            text-decoration: none;
+            padding: 12px 24px;
+            border: 2px solid var(--accent);
+            transition: all 0.3s ease;
+            margin-top: 16px;
+        }
+
+        .address-link:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        .contact-info {
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 32px;
+            text-align: left;
+        }
+
+        .contact-item h4 {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #999;
+            margin-bottom: 12px;
+        }
+
+        .contact-item p,
+        .contact-item a {
+            font-size: 1.05rem;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        .contact-item a {
+            text-decoration: none;
+            color: var(--accent);
+            transition: opacity 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            opacity: 0.7;
+        }
+
+        .highlights {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            margin: 60px 0;
+            flex-wrap: wrap;
+        }
+
+        .highlight-item {
+            text-align: center;
+        }
+
+        .highlight-item h3 {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.95rem;
+            color: var(--accent);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 24px;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .highlights {
+                gap: 32px;
+            }
+
+            .location-section {
+                padding: 32px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Wicked Grill</h1>
+            <p class="tagline">Food Truck</p>
+            <a href="index.html" class="back-link">← Back to Portfolio</a>
+        </header>
+
+        <div class="highlights">
+            <div class="highlight-item">
+                <h3>Charcoal Grilled</h3>
+            </div>
+            <div class="highlight-item">
+                <h3>Fresh Ingredients</h3>
+            </div>
+            <div class="highlight-item">
+                <h3>Fresh Lemonade</h3>
+            </div>
+        </div>
+
+        <section class="section">
+            <h2 class="section-title">Schedule</h2>
+            <div class="schedule-grid">
+                <div class="schedule-card">
+                    <h3>Food Truck</h3>
+                    <p>
+                        <strong>Monday-Friday:</strong> Closed<br>
+                        <strong>Saturday:</strong> 9:00AM - 4:00PM<br>
+                        <strong>Sunday:</strong> 9:00AM - 4:00PM
+                    </p>
+                </div>
+                <div class="schedule-card">
+                    <h3>Catering</h3>
+                    <p>
+                        Please call to arrange catering for your next festival or event.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Menu</h2>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <div class="menu-header">
+                        <span class="menu-name">Shish Kebab</span>
+                        <span class="menu-price">$3</span>
+                    </div>
+                    <p class="menu-desc">Bamboo skewers of fresh & delicious chicken or pork, seasoned with our secret blend of spices. Grilled over American charcoal and glazed with our special BBQ sauce.</p>
+                    <span class="menu-tag">Two for $5</span>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-header">
+                        <span class="menu-name">BBQ Pork Ribs</span>
+                        <span class="menu-price">$5</span>
+                    </div>
+                    <p class="menu-desc">A crowd favorite! Two ribs for $5 or $15/rack. Coated in a special blend of spices, then roasted low & slow for several hours. Add extra BBQ sauce or Carolina Sauce.</p>
+                    <span class="menu-tag">Chef Selection</span>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-header">
+                        <span class="menu-name">Roasted Corn</span>
+                        <span class="menu-price">$2</span>
+                    </div>
+                    <p class="menu-desc">Local farm fresh New Jersey corn, roasted over hot charcoals. Go classic with salt and butter, or try hot pepper and lime.</p>
+                    <span class="menu-tag">Seasonal</span>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-header">
+                        <span class="menu-name">Sausage, Pepper & Onion Sandwich</span>
+                        <span class="menu-price">$5</span>
+                    </div>
+                    <p class="menu-desc">Sweet or spicy Italian pork sausage served on a locally baked Italian sub roll with bell peppers and onions in our homemade red sauce.</p>
+                    <span class="menu-tag">Recommended</span>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-header">
+                        <span class="menu-name">Hot Dogs</span>
+                        <span class="menu-price">$2</span>
+                    </div>
+                    <p class="menu-desc">Grilled or water Sabrett hot dogs served on a locally baked bun. Load on your favorite toppings like relish, red onions, ketchup and mustard.</p>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-header">
+                        <span class="menu-name">Lemonade</span>
+                        <span class="menu-price">$3</span>
+                    </div>
+                    <p class="menu-desc">Fresh lemonade made daily. Try our mango or strawberry flavors!</p>
+                    <span class="menu-tag">Fresh Daily</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="location-section">
+                <h2>Where You Can Find Us</h2>
+                <p>We are located just outside of the Englishtown Auction Flea Market, and open every Saturday and Sunday (weather permitting).</p>
+                <a href="https://goo.gl/maps/f5VEvC2Jc652" target="_blank" class="address-link">
+                    27 Sobechko Rd, Manalapan Township, NJ 07726
+                </a>
+
+                <div class="contact-info">
+                    <div class="contact-grid">
+                        <div class="contact-item">
+                            <h4>Address</h4>
+                            <p>27 Sobechko Rd<br>Manalapan Township, NJ 07726</p>
+                        </div>
+                        <div class="contact-item">
+                            <h4>Phone</h4>
+                            <p><a href="tel:+17179840218">(717) 984-0218</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
